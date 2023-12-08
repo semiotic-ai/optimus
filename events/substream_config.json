@@ -1,0 +1,14 @@
+{
+    "name": "odos",
+    "version": "v1.0.0",
+    "network": "mainnet",
+    "database": "odos",
+    "contracts":[
+        {
+            "name":"odos_v2",
+            "table_prefix":"v2_",
+            "address":"cf5540fffcdc3d510b18bfca6d2b9987b0772559",
+            "abi_file":"./abi/odos_v2.json"
+        }
+    ]
+}

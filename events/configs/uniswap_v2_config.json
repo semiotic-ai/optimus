@@ -1,0 +1,17 @@
+{
+    "name": "uniswap_v2_ethereum",
+    "chain": "mainnet",
+    "database": "uniswap_v2_ethereum",
+    "contracts":[
+        {
+            "name":"uniswap_v2_factory",
+            "table_prefix":"factory_evt_",
+            "abi_file":"./abi/uniswap_v2_factory.json"
+        },
+        {
+            "name":"uniswap_v2_pair",
+            "table_prefix":"pair_evt_",
+            "abi_file":"./abi/uniswap_v2_pair.json"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+  "release-type": "rust",
+  "packages": {
+    "tx": {
+      "package-name": "optimus-tx",
+      "pull-request-title-pattern": "chore: release ${component} ${version}"
+    },
+    "events": {
+      "package-name": "optimus-events",
+      "pull-request-title-pattern": "chore: release ${component} ${version}"
+    }
+  },
+  "separate-pull-requests": true,
+  "plugins": ["cargo-workspace"]
+}

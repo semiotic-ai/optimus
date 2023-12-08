@@ -1,0 +1,19 @@
+[package]
+name = "optimus-tx"
+version = "0.0.1"
+authors.workspace = true
+edition.workspace = true
+description = "Substream package for blocks and transactions"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+anyhow.workspace = true
+ethabi.workspace = true
+hex.workspace = true
+num-bigint.workspace = true
+prost.workspace = true
+substreams.workspace = true
+substreams-database-change.workspace = true
+substreams-ethereum.workspace = true

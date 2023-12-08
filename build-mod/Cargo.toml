@@ -1,0 +1,15 @@
+[package]
+name = "build-mod"
+version = "0.0.1"
+authors.workspace = true
+edition.workspace = true
+
+[lib]
+
+[dependencies]
+anyhow.workspace = true
+heck = "0.4.1"
+prettyplease = "0.2.6"
+proc-macro2 = "1.0.59"
+quote = "1.0.28"
+syn = { version = "2.0.18", features = ["full", "parsing"] }
