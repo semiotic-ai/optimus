@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package ai.semiotic.uniswap.x;
+
+message Orders {
+  repeated ExclusiveDutchOrder orders = 1;
+}
+
+message TransactionInfo {
+  bytes from = 1;
+  bytes to = 2;
+  bytes caller = 3; // maker?
+  int64 blockTime = 4;
+  uint64 blockNumber = 5;
+  bytes txHash = 6;
+  uint32 logIndex = 7;
+}
+
+message OrderInfo {
+  bytes reactor = 1;
+  bytes swapper = 2; // taker
+  string nonce = 3;
+  string deadline = 4;
+  bytes additionalValidationContract = 5;
+  bytes additionalValidationData = 6;
+}
+
+message ExclusiveDutchOrder {
+  OrderInfo info = 1;
+  TransactionInfo tx_info = 2;
+  string decayStartTime = 3;
+  string decayEndTime = 4;
+  bytes exclusiveFiller = 5;
+  string exclusivityOverrideBps = 6;
+  DutchInput input = 7;
+  repeated DutchOutput outputs = 8;
+}
+
+
+message DutchOutput {
+  bytes token = 1; // token out
+  string startAmount = 2;
+  string endAmount = 3; 
+  bytes recipient = 4; // target?
+  string decayedAmount = 5; // token out raw: calculate using decay()
+}
+
+message DutchInput {
+  bytes token = 1; // token in
+  string startAmount = 2; 
+  string endAmount = 3;
+  string decayedAmount = 4; // token in raw: calculate using decay()
+}
+

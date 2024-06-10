@@ -1,0 +1,19 @@
+{
+    "name": "uniswap_v2_polygon",
+    "version": "v1.0.0",
+    "network": "polygon",
+    "initial_block": 3526473,
+    "database": "uniswap_v2_polygon",
+    "contracts":[
+        {
+            "name":"uniswap_v2_factory",
+            "table_prefix":"factory_evt_",
+            "abi_file":"./abi/uniswap_v2_factory.json"
+        },
+        {
+            "name":"uniswap_v2_pair",
+            "table_prefix":"pair_evt_",
+            "abi_file":"./abi/uniswap_v2_pair.json"
+        }
+    ]
+}

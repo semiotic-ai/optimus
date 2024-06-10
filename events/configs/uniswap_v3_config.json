@@ -1,0 +1,19 @@
+{
+    "name": "uniswap_v3_ethereum",
+    "version": "v1.0.0",
+    "network": "mainnet",
+    "initial_block": 12369621,
+    "database": "uniswap_v3_ethereum",
+    "contracts":[
+        {
+            "name":"uniswap_v3_factory",
+            "table_prefix":"factory_evt_",
+            "abi_file":"./abi/uniswap_v3_factory.json"
+        },
+        {
+            "name":"uniswap_v3_pool",
+            "table_prefix":"pool_evt_",
+            "abi_file":"./abi/uniswap_v3_pool.json"
+        }
+    ]
+}

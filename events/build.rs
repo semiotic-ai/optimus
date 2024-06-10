@@ -11,18 +11,20 @@ use substreams_ethereum::{AbiExtension, Abigen, EventExtension};
 use ethabi::{Contract, Error, ParamType};
 use serde::Deserialize;
 use serde_json::from_reader;
+use heck::ToSnakeCase;
 
 
 const CODE_PATH:&str = "src/abi";
 const OUTPUT_PATH:&str = "output";
 
-const SQL_TABLE_END:&[u8; 330] = 
+const SQL_TABLE_END:&[u8; 367] = 
 b"\t`evt_block_number` UInt64,
 \t`evt_tx_hash` FixedString(64),
 \t`evt_index` UInt32,
 \t`evt_block_time` DateTime,
 \t`tx_to` FixedString(40),
 \t`tx_from` FixedString(40),
+\t`contract_address` FixedString(40),
 )
 ENGINE = MergeTree
 PRIMARY KEY (evt_block_time,
@@ -48,6 +50,7 @@ struct SubstreamConfig {
     name:String,
     version:String,
     network:String,
+    initial_block:Option<u64>,
     database:String,
     contracts:Vec<SubstreamContract>,
 }
@@ -61,13 +64,23 @@ fn normalize_path<S: AsRef<Path>>(relative_path: S) -> Result<PathBuf, anyhow::E
     Ok(path)
 }
 
+fn round_up_to_multiple_of_two(value: &usize) -> usize {
+    let mut result = 1;
+    while &result < value {
+        result *= 2;
+    }
+    result
+}
+
+
+
 fn write_param_type_sql(param_type: &ParamType,writer:&mut impl Write) -> Result<(), anyhow::Error> {
     match param_type {
         ParamType::String  | ParamType::Bytes  => write!(writer,"String")?,
         ParamType::Address => write!(writer,"FixedString(40)")?,
         ParamType::FixedBytes(size) => write!(writer,"FixedString({})", size)?,
-        ParamType::Int(size) => write!(writer,"Int{}", size)?,
-        ParamType::Uint(size) => write!(writer, "UInt{}", size)?,
+        ParamType::Int(size) => write!(writer,"Int{}", round_up_to_multiple_of_two(size))?,
+        ParamType::Uint(size) => write!(writer, "UInt{}", round_up_to_multiple_of_two(size))?,
         ParamType::Bool => write!(writer,"Boolean")?,
         ParamType::Array(item_type)  | ParamType::FixedArray(item_type, _) => {
             write!(writer,"Array(")?;
@@ -105,7 +118,7 @@ fn write_contract_sql(
 
             write!(writer,"\nCREATE TABLE IF NOT EXISTS {}.{} (\n", database_name, table_name)?;
             for param in event.inputs {
-                write!(writer,"\t`{}` ", param.name)?;
+                write!(writer,"\t`{}` ", param.name.to_snake_case())?;
                 write_param_type_sql(&param.kind,writer)?;
                 write!(writer,",\n")?;
             }
@@ -223,6 +236,7 @@ fn generate_substreams(config: &SubstreamConfig) -> Result<()> {
     template = template.replace("{{NAME}}",&config.name);
     template = template.replace("{{VERSION}}",&config.version);
     template = template.replace("{{NETWORK}}",&config.network);
+    template = template.replace("{{INITIALBLOCK}}",&config.initial_block.unwrap_or(0).to_string());
 
     fs::File::create(format!("{}/substreams.yaml",OUTPUT_PATH))?.write_all(template.as_bytes())?;
 

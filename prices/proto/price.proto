@@ -1,0 +1,11 @@
+
+syntax = "proto3";
+
+package semiotic.price;
+
+message Token {
+  string address = 1;
+  string symbol = 2;
+  string name = 3;
+  uint64 decimals = 4;
+}

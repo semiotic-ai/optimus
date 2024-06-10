@@ -15,6 +15,7 @@ binaries:
 modules:
   - name: db_out
     kind: map
+    initialBlock: {{INITIALBLOCK}}
     inputs:
       - source: sf.ethereum.type.v2.Block
     output:

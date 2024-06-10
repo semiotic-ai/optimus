@@ -1,0 +1,22 @@
+specVersion: v0.1.0
+package:
+  name: 'forwarder'
+  version: v1.0.0
+
+imports:
+  ethereum: https://github.com/streamingfast/firehose-ethereum/releases/download/v2.0.0/ethereum-v1.1.0.spkg
+
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/optimus_forwarder.wasm
+
+modules:
+  - name: forward
+    kind: map
+    initialBlock: 1
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:sf.ethereum.type.v2.Block

@@ -1,0 +1,16 @@
+[package]
+name = "optimus-core"
+version = "0.0.1"
+edition.workspace = true
+authors.workspace = true
+description = "Core library to build substream package for contract events"
+
+[lib]
+crate-type = ["lib"]
+
+[dependencies]
+anyhow.workspace = true
+ethabi.workspace = true
+hex.workspace = true
+num-bigint.workspace = true
+prost.workspace = true

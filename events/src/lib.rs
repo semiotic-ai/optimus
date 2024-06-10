@@ -61,6 +61,10 @@ fn get_events(
 
 #[substreams::handlers::map]
 fn db_out(block: eth::v2::Block) -> Result<DatabaseChanges, substreams::errors::Error> {
+  transform(block)
+}
+
+pub fn transform(block: eth::v2::Block) -> Result<DatabaseChanges, substreams::errors::Error> {
     let mut database_changes: DatabaseChanges = Default::default();
     let events = get_events(&block)?;
 
@@ -68,6 +72,8 @@ fn db_out(block: eth::v2::Block) -> Result<DatabaseChanges, substreams::errors::
 
     Ok(database_changes)
 }
+
+
 
 fn transform_events_to_database_changes(
     changes: &mut DatabaseChanges,

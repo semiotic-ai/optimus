@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ethereum-uniswap-prices
+  namespace: substreams
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ethereum-uniswap-prices
+      environment: development
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ethereum-uniswap-prices
+        environment: development      
+      annotations:
+        gke-gcsfuse/volumes: "true"
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - name: substreams-sink-sql
+        image: us-central1-docker.pkg.dev/graphplots/substreams-module/substreams-sink-sql:v1.0.0
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 500m
+            ephemeral-storage: 100M
+            memory: 500M
+          requests:
+            cpu: 500m
+            ephemeral-storage: 100M
+            memory: 500M
+        env:
+          - name: UNDO_BUFFER_SIZE
+            value: "158"
+          - name: TARGET_DATABASE
+            value: prices
+          - name: DATABASE_URL
+            value: clickhouse://nfwdrw1x4h.us-central1.p.gcp.clickhouse.cloud:9440/default?secure=true&skip_verify=true&username=default&password=********
+          - name: SUBSTREAMS_API_TOKEN
+            value: ********
+            value: /data/substreams/price_v3.spkg
+        volumeMounts:
+        - name: gcs-fuse-csi-static
+          mountPath: /data
+          readOnly: true
+      volumes:
+      - name: gcs-fuse-csi-static
+        persistentVolumeClaim:
+          claimName: gcs-fuse-csi-static-pvc

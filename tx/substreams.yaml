@@ -10,7 +10,7 @@ imports:
 binaries:
   default:
     type: wasm/rust-v1
-    file: ./target/wasm32-unknown-unknown/release/substreams_transactions.wasm
+    file: ../target/wasm32-unknown-unknown/release/optimus_tx.wasm
 
 modules:
   - name: db_out
@@ -26,3 +26,5 @@ sink:
   config:
     schema: "schema.sql"
     engine: clickhouse
+
+network: polygon

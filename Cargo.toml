@@ -3,13 +3,19 @@ members = [
   "tx",
   "build-mod",
   "events",
-  "to-table-derive"
+  "to-table-derive",
+  "price",
+  "prices",
+  "uniswapx",
+  "client",
+  "forwarder"
 ]
-default-members = ["tx","events"]
+
+default-members = ["tx","events","prices","uniswapx","client"]
 resolver = "2"
 
 [workspace.package]
-authors = ["Tumay Tuzcu <tumay@semiotic.ai>"]
+authors = ["Gustavo Inacio <gustavo@semiotic.ai>","Tumay Tuzcu <tumay@semiotic.ai>"]
 edition = "2021"
 
 [workspace.dependencies]
@@ -18,8 +24,10 @@ ethabi = "18.0.0"
 hex = "0.4.3"
 num-bigint = "0.4.3"
 prost = "0.11.9"
+prost-types = "0.11.9"
 substreams = "0.5.12"
 substreams-database-change = "1.3.0"
+substreams-entity-change = "1.3.0"
 substreams-ethereum = { git = "https://github.com/semiotic-ai/substreams-ethereum" }
 
 [profile.release]

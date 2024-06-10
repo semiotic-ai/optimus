@@ -1,0 +1,15 @@
+[package]
+name = "optimus-forwarder"
+version = "0.0.1"
+authors.workspace = true
+edition.workspace = true
+description = "Substream blocks forwarder"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+anyhow.workspace = true
+substreams.workspace = true
+substreams-database-change.workspace = true
+substreams-ethereum.workspace = true

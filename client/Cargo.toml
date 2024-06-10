@@ -1,0 +1,23 @@
+[package]
+name = "optimus-client"
+version = "0.0.1"
+edition.workspace = true
+authors.workspace = true
+description = "Substream package for contract events"
+
+
+[dependencies]
+anyhow.workspace = true
+async-stream = "0.3"
+futures03 = { version = "0.3.1", package = "futures", features = ["compat"] }
+reqwest = "0.11"
+tokio = { version = "1.27", features = ["time", "sync", "macros", "test-util", "rt-multi-thread", "parking_lot"] }
+tokio-stream = { version = "0.1", features = ["sync"] }
+tokio-retry = "0.3"
+tonic = { version = "0.9", features = ["tls-roots"] }
+prost.workspace = true
+prost-types = "0.11"
+thiserror = "1"
+clap = { version = "4.4.11", features = ["derive","env"] }
+substreams-ethereum.workspace = true
+optimus-price = { path = "../price" }

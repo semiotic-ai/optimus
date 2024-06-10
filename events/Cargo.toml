@@ -6,7 +6,7 @@ authors.workspace = true
 description = "Substream package for contract events"
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["lib"]
 
 [dependencies]
 anyhow.workspace = true
@@ -29,6 +29,7 @@ getrandom = { version = "0.2", features = ["custom"] }
 [build-dependencies]
 anyhow.workspace = true
 ethabi.workspace = true
+heck = "0.4.1"
 substreams-ethereum.workspace = true
 serde = "1.0.0"
 serde_json = "1.0.0"

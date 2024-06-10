@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS ethereum;
+CREATE DATABASE IF NOT EXISTS polygon;
 
-CREATE TABLE IF NOT EXISTS ethereum.transactions (
+CREATE TABLE IF NOT EXISTS polygon.transactions (
     hash FixedString(64),
     block_number UInt64,
     block_time DateTime,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS ethereum.transactions (
     PRIMARY KEY (hash, block_number, block_time, block_hash)
 ) Engine = MergeTree();
 
-CREATE TABLE IF NOT EXISTS ethereum.blocks (
+CREATE TABLE IF NOT EXISTS polygon.blocks (
     time DateTime,
     "number" UInt64,
     hash FixedString(64),
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS ethereum.blocks (
     PRIMARY KEY (time, number, hash)
 ) Engine = MergeTree();
 
-CREATE TABLE IF NOT EXISTS ethereum.cursors
+CREATE TABLE IF NOT EXISTS polygon.cursors
 (
     id         String,
 	cursor     String,

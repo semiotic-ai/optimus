@@ -1,6 +1,14 @@
-target
 .env
-bin
+.envrc
+.idea
+/target/
 *.spkg
-generated
+*~
+/env/
+/build
+debug.log
+replay.log
+bin
 .vscode
+buf.gen.yaml
+substreams.spkg

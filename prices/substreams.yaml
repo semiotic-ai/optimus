@@ -1,0 +1,48 @@
+specVersion: v0.1.0
+package:
+  name: 'price_sink'
+  version: v2.0.0
+
+imports:
+  sql: https://github.com/streamingfast/substreams-sink-sql/releases/download/protodefs-v1.0.7/substreams-sink-sql-protodefs-v1.0.7.spkg
+  database_change: https://github.com/streamingfast/substreams-sink-database-changes/releases/download/v1.3.0/substreams-sink-database-changes-v1.3.0.spkg
+  uniswap: ./imports/uniswap-substreams.spkg
+
+protobuf:
+  files:
+    - price.proto
+  importPaths:
+    - ./proto
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/optimus_prices.wasm
+
+modules:
+  - name: db_out
+    kind: map
+    initialBlock: 12369621
+    inputs:
+      - store: uniswap:store_eth_prices
+        mode: deltas
+      - store: store_token_info
+        mode: deltas
+    output:
+      type: proto:sf.substreams.sink.database.v1.DatabaseChanges
+  - name: store_token_info
+    kind: store
+    updatePolicy: set_if_not_exists
+    valueType: proto:semiotic.price.Token
+    initialBlock: 12369621
+    inputs:
+      - map: uniswap:map_pools_created
+
+sink:
+  module: db_out
+  type: sf.substreams.sink.sql.v1.Service
+  config:
+    schema: ./schema.sql
+    engine: clickhouse
+
+network: mainnet

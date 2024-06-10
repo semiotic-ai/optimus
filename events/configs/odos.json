@@ -1,0 +1,21 @@
+{
+    "name": "odos",
+    "version": "v1.0.0",
+    "network": "mainnet",
+    "initial_block": 15482404,
+    "database": "odos",
+    "contracts":[
+        {
+            "name":"odos_v1",
+            "table_prefix":"v1_",
+            "address":"76f4eed9fe41262669d0250b2a97db79712ad855",
+            "abi_file":"./abi/odos_v1.json"
+        },
+        {
+            "name":"odos_v2",
+            "table_prefix":"v2_",
+            "address":"cf5540fffcdc3d510b18bfca6d2b9987b0772559",
+            "abi_file":"./abi/odos_v2.json"
+        }
+    ]
+}

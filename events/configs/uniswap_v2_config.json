@@ -1,6 +1,8 @@
 {
     "name": "uniswap_v2_ethereum",
-    "chain": "mainnet",
+    "version": "v1.0.0",
+    "network": "mainnet",
+    "initial_block": 10000835,
     "database": "uniswap_v2_ethereum",
     "contracts":[
         {

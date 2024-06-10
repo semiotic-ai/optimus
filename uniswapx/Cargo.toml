@@ -1,0 +1,31 @@
+[package]
+name = "optimus-uniswapx"
+version = "0.0.1"
+authors.workspace = true
+edition.workspace = true
+description = "Substream package for uniswap-x"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+anyhow.workspace = true
+ethabi.workspace = true
+hex-literal = "0.4.1"
+num-bigint.workspace = true
+prost.workspace = true
+substreams.workspace = true
+substreams-ethereum.workspace = true
+substreams-database-change.workspace = true
+
+[target.wasm32-unknown-unknown.dependencies]
+getrandom = { version = "0.2", features = ["custom"] }
+
+[build-dependencies]
+anyhow.workspace = true
+substreams-ethereum.workspace = true
+
+[dev-dependencies]
+base64 = "0.21.5"

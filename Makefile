@@ -31,15 +31,18 @@ install:
 		tar -xvf ${SQLSINK_SETUP}; \
     fi
 
+codegen:
+	./bin/substreams protogen ./price/substreams.yaml --exclude-paths="sf/substreams,google"
+
 build:
-	cargo build --target wasm32-unknown-unknown --release --package optimus-events
-	./bin/substreams pack ./events/output/substreams.yaml -o ./events/output/substreams.spkg  
+	cargo build --target wasm32-unknown-unknown --release --package optimus-prices
+	./bin/substreams pack ./prices/substreams.yaml -o ./prices/substreams.spkg  
 
 setup: 
-	./bin/substreams-sink-sql setup "${DATABASE_URL}" "./events/output/substreams.spkg"
+	./bin/substreams-sink-sql setup "${DATABASE_URL}" "./tx/substreams.spkg"
 
 sink:
-	./bin/substreams-sink-sql run $(subst /default,/${TARGET_DATABASE},"${DATABASE_URL}") "./events/output/substreams.spkg" --on-module-hash-mistmatch warn --undo-buffer-size ${UNDO_BUFFER_SIZE} --flush-interval ${FLUSH_INTERVAL}
+	./bin/substreams-sink-sql run $(subst /default,/${TARGET_DATABASE},"${DATABASE_URL}") "./tx/substreams.spkg" --on-module-hash-mistmatch warn --undo-buffer-size ${UNDO_BUFFER_SIZE} --flush-interval ${FLUSH_INTERVAL}
 
 execute:
 	until make setup; do sleep 1; done && make sink
