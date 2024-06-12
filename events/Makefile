@@ -4,7 +4,7 @@ build:
 
 SUBSTREAMS_FILE ?= output/substreams.yaml
 compile: build
-	substreams pack "${SUBSTREAMS_FILE}" -o substreams.spkg  
+	substreams pack "${SUBSTREAMS_FILE}" -o output/substreams.spkg  
 
 codegen:
 	substreams protogen substreams.yaml --exclude-paths="sf/substreams,google"                                             
