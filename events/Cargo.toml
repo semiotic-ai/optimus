@@ -6,7 +6,7 @@ authors.workspace = true
 description = "Substream package for contract events"
 
 [lib]
-crate-type = ["lib"]
+crate-type = ["cdylib"]
 
 [dependencies]
 anyhow.workspace = true
@@ -18,7 +18,7 @@ substreams.workspace = true
 substreams-database-change.workspace = true
 substreams-ethereum.workspace = true
 getrandom = { version = "0.2", features = ["custom"] }
-chrono = { version = "0.4.24", features = ["std"], default-features = false}
+chrono = { version = "0.4.24", features = ["std"], default-features = false }
 prost-types = "0.11.9"
 to-table-derive = { path = "../to-table-derive" }
 strum = { version = "0.25.0", features = ["strum_macros", "derive"] }
