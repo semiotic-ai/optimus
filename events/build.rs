@@ -167,8 +167,7 @@ fn main() -> Result<(), anyhow::Error> {
     let _ = fs::remove_dir_all(CODE_PATH);
     fs::create_dir(CODE_PATH)?;
 
-    let _ = fs::remove_dir_all(OUTPUT_PATH);
-    fs::create_dir(OUTPUT_PATH)?;
+    let _ = remove_dir_contents(OUTPUT_PATH);
 
     let substream_config: SubstreamConfig = from_reader(fs::File::open("substream_config.json")?)?;
 
@@ -235,5 +234,20 @@ fn generate_substreams(config: &SubstreamConfig) -> Result<()> {
 
     fs::File::create(format!("{}/substreams.yaml", OUTPUT_PATH))?.write_all(template.as_bytes())?;
 
+    Ok(())
+}
+
+fn remove_dir_contents<P: AsRef<Path>>(path: P) -> Result<()> {
+    for entry in fs::read_dir(path)? {
+        let entry = entry?;
+        let path = entry.path();
+
+        if entry.file_type()?.is_dir() {
+            remove_dir_contents(&path)?;
+            fs::remove_dir(path)?;
+        } else {
+            fs::remove_file(path)?;
+        }
+    }
     Ok(())
 }
