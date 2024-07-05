@@ -167,6 +167,7 @@ fn main() -> Result<(), anyhow::Error> {
     let _ = fs::remove_dir_all(CODE_PATH);
     fs::create_dir(CODE_PATH)?;
 
+    fs::create_dir_all(OUTPUT_PATH)?;
     let _ = remove_dir_contents(OUTPUT_PATH);
 
     let substream_config: SubstreamConfig = from_reader(fs::File::open("substream_config.json")?)?;
